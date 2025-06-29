@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <title>My plan and my to-do list</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #7711de;
+      margin: auto;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+    .todo-container {
+      background: #fff;
+      padding: 30px;
+      margin-top: 60px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 500px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    /*inputbotam*/
+    .input-group {
+      display: flex;
+      gap: 10px;
+    }
+
+    #taskInput {
+      flex: 1;
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 10px 15px;
+      font-size: 16px;
+      background-color: #1e90ff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    button:hover {
+      background-color: #0d75d9;
+    }
+
+    /*Amar task list*/
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin-top: 20px;
+    }
+
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f9f9f9;
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    /*completed kaj*/
+    .completed {
+      text-decoration: line-through;
+      color: gray;
+    }
+
+    /*delete botam*/
+    .delete-btn {
+      background: red;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="todo-container">
+    <h1>My plan and my to-do list</h1>
+    <div class="input-group">
+      <input type="text" id="taskInput" placeholder="নতুন কাজ লিখুন...">
+      <button onclick="addTask()">Add in list</button>
+    </div>
+    <ul id="taskList"></ul>
+  </div>
+
+  <script>
+    // page load holee task dekaw.
+    window.onload = function () {
+      renderTasks();
+    };
+    function addTask() {
+      const input = document.getElementById("taskInput");
+      const taskText = input.value.trim();
+
+      if (taskText !== "") {
+        const task = {
+          text: taskText,
+          completed: false
+        };
+
+        let tasks = getTasks();
+        tasks.push(task);
+        saveTasks(tasks);
+        renderTasks();
+        input.value = ""; //input faka koro.
+      }
+    }
+
+   //enter key chaple add hobee.
+    document.getElementById("taskInput").addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        addTask();
+      }
+    });
+
+    //local storage theke kajgolo niyee asho.
+    function getTasks() {
+      const tasks = localStorage.getItem("tasks");
+      return tasks ? JSON.parse(tasks) : [];
+    }
+
+    // save in local storage
+    function saveTasks(tasks) {
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+    }
+
+    // kajgolo dekhaw.
+    function renderTasks() {
+      const taskList = document.getElementById("taskList");
+      taskList.innerHTML = "";
+
+      const tasks = getTasks();
+
+      tasks.forEach((task, index) => {
+        const li = document.createElement("li");
+
+        // clk korle kaj somponno hobee.
+        li.onclick = () => toggleComplete(index);
+
+        if (task.completed) {
+          li.classList.add("completed");
+        }
+
+        li.textContent = task.text;
+
+        //delete button
+        const delBtn = document.createElement("button");
+        delBtn.textContent = "Delete me";
+        delBtn.className = "delete-btn";
+        delBtn.onclick = function (e) {
+          e.stopPropagation(); // task complete toggole na hoy.
+          deleteTask(index);
+        };
+
+        li.appendChild(delBtn);
+        taskList.appendChild(li);
+      });
+    }
+
+    // kaj muche felar function
+    function deleteTask(index) {
+      let tasks = getTasks();
+      tasks.splice(index, 1); // list theeke kaj bad daw.
+      saveTasks(tasks);
+      renderTasks();
+    }
+
+    // kaj somponno toggole koro.
+    function toggleComplete(index) {
+      let tasks = getTasks();
+      tasks[index].completed = !tasks[index].completed;
+      saveTasks(tasks);
+      renderTasks();
+    }
+  </script>
+</body>
+</html>
