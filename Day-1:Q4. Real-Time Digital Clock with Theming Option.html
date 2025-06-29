@@ -1,0 +1,86 @@
+  
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Clock with Theme</title>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #000000;
+        }
+
+        .dark-theme {
+            --bg-color: #110101;
+            --text-color: #ffffff;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: auto;
+            font-family: Arial, sans-serif;
+            transition: background-color 2s, color 2s;
+        }
+
+        .clock {
+            font-size: 6rem;
+            margin-bottom: 20px;
+        }
+
+        .theme-toggle {
+            padding: 10px 20px;
+            font-size: 2rem;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: var(--text-color);
+            color: var(--bg-color);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="clock" id="clock">00:00:00</div>
+    <button class="theme-toggle" id="themeToggle">Toggle Theme</button>
+    <script>
+        const clock = document.getElementById('clock');
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        function updateClock() {
+            const now = new Date();
+            const h = String(now.getHours()).padStart(2, '0'); //ami doi digit kore nicchi ekhanee.
+            const m = String(now.getMinutes()).padStart(2, '0');
+            const s = String(now.getSeconds()).padStart(2, '0');
+            clock.textContent = `${h}:${m}:${s}`;
+        }
+        setInterval(updateClock, 1000); 3
+        updateClock();
+        function setTheme(theme) {
+            if (theme === 'dark') {
+                body.classList.add('dark-theme');
+            }
+            else {
+                body.classList.remove('dark-theme');
+
+            }
+
+            localStorage.setItem('theme', theme);
+        }
+        themeToggle.addEventListener('click', () => {
+            const isDark = body.classList.contains('dark-theme');
+            setTheme(isDark ? 'light' : 'dark');
+        });
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        setTheme(savedTheme);
+    </script>
+</body>
+
+</html>
