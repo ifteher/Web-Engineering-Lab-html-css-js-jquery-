@@ -1,0 +1,327 @@
+#Topics:Validatable XML from XSD (as per given XSD schema):
+#XSD FILE:
+
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified" version="1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:element name="DataPDU" type="DataPDUType" />
+  <xsd:complexType name="DataPDUType">
+    <xsd:sequence>
+      <xsd:element name="Body" type="BodyType" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="BodyType">
+    <xsd:sequence>
+      <xsd:element name="AppHdr" type="AppHdrType" />
+      <xsd:element name="Document" type="DocumentType" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="DocumentType">
+    <xsd:sequence>
+      <xsd:element name="FIToFICstmrCdtTrf" type="FIToFICstmrCdtTrfType" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="FIToFICstmrCdtTrfType">
+    <xsd:sequence>
+      <xsd:element name="GrpHdr" type="GrpHdrType" />
+      <xsd:element maxOccurs="unbounded" name="CdtTrfTxInf" type="CdtTrfTxInfType" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="CdtTrfTxInfType">
+    <xsd:sequence>
+      <xsd:element name="PmtId" type="PmtIdType" />
+	  <xsd:element name="PmtTpInf" type="PmtTpInfType" />
+      <xsd:element name="IntrBkSttlmAmt" type="IntrBkSttlmAmtType" />
+	  <xsd:element name="IntrBkSttlmDt" type="xsd:dateTime" />
+      <xsd:element name="ChrgBr" type="xsd:string" />
+	  <xsd:element name="InstdAgt" type="InstdAgtType" />
+      <xsd:element name="Dbtr" type="DbtrType" />
+      <xsd:element name="DbtrAcct" type="DbtrAcctType" />
+      <xsd:element name="DbtrAgt" type="DbtrAgtType" />
+      <xsd:element name="CdtrAgt" type="CdtrAgtType" />
+      <xsd:element name="Cdtr" type="CdtrType" />
+      <xsd:element name="CdtrAcct" type="CdtrAcctType" />
+      <xsd:element name="RmtInf" type="RmtInfType" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="CdtrAcctType">
+    <xsd:sequence>
+      <xsd:element name="Id" type="IdType" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="IdType">
+    <xsd:sequence>
+      <xsd:element name="Othr" type="OthrType" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="OthrType">
+    <xsd:sequence>
+      <xsd:element name="Id" type="xsd:string" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="CdtrType">
+	<xsd:sequence>
+      <xsd:element name="Nm" type="xsd:string" />
+      <xsd:element name="PstlAdr" type="PstlAdrType" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="PstlAdrType">
+    <xsd:sequence>
+      <xsd:element name="AdrLine" type="xsd:string" />
+      <xsd:element name="StrtNm" type="xsd:string" />
+      <xsd:element name="TwnNm" type="xsd:string" />
+      <xsd:element name="Ctry" type="xsd:string" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="CdtrAgtType">
+    <xsd:sequence>
+      <xsd:element name="FinInstnId" type="FinInstnIdType" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="FinInstnIdType">
+    <xsd:sequence>
+      <xsd:element name="BICFI" type="xsd:string" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="DbtrAgtType">
+    <xsd:sequence>
+      <xsd:element name="FinInstnId" type="FinInstnIdType" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="DbtrAcctType">
+    <xsd:sequence>
+      <xsd:element name="Id" type="IdType" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="DbtrType">
+    <xsd:sequence>
+      <xsd:element name="Nm" type="xsd:string" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="RmtInfType">
+    <xsd:sequence>
+      <xsd:element name="Ustrd" type="xsd:string" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="IntrBkSttlmAmtType">
+    <xsd:attribute name="Ccy" type="xsd:string" />
+  </xsd:complexType>
+  <xsd:complexType name="PmtIdType">
+    <xsd:sequence>
+      <xsd:element name="InstrId" type="xsd:string" />
+      <xsd:element name="EndToEndId" type="xsd:string" />
+      <xsd:element name="TxId" type="xsd:string" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="GrpHdrType">
+    <xsd:sequence>
+      <xsd:element name="MsgId" type="xsd:string" />
+      <xsd:element name="CreDtTm" type="xsd:dateTime" />
+      <xsd:element name="BtchBookg" type="xsd:boolean" />
+      <xsd:element name="NbOfTxs" type="xsd:int" />
+      <xsd:element name="TtlIntrBkSttlmAmt" type="TtlIntrBkSttlmAmtType" />
+      <xsd:element name="IntrBkSttlmDt" type="xsd:dateTime" />
+      <xsd:element name="SttlmInf" type="SttlmInfType" />
+      <xsd:element name="PmtTpInf" type="PmtTpInfType" />
+      <xsd:element name="InstgAgt" type="InstgAgtType" />
+      <xsd:element name="InstdAgt" type="InstdAgtType" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="InstdAgtType">
+    <xsd:sequence>
+      <xsd:element name="FinInstnId" type="FinInstnIdType" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="InstgAgtType">
+    <xsd:sequence>
+      <xsd:element name="FinInstnId" type="FinInstnIdType" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="PmtTpInfType">
+    <xsd:sequence>
+      <xsd:element name="ClrChanl" type="xsd:string" />
+      <xsd:element name="SvcLvl" type="SvcLvlType" />
+      <xsd:element name="LclInstrm" type="LclInstrmType" />
+      <xsd:element name="CtgyPurp" type="CtgyPurpType" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="CtgyPurpType">
+    <xsd:sequence>
+      <xsd:element name="Prtry" type="xsd:int" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="LclInstrmType">
+    <xsd:sequence>
+      <xsd:element name="Prtry" type="xsd:string" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="SvcLvlType">
+    <xsd:sequence>
+      <xsd:element name="Prtry" type="xsd:int" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="SttlmInfType">
+    <xsd:sequence>
+      <xsd:element name="SttlmMtd" type="xsd:string" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="TtlIntrBkSttlmAmtType">
+    <xsd:attribute name="Ccy" type="xsd:string" />
+  </xsd:complexType>
+  <xsd:complexType name="AppHdrType">
+    <xsd:sequence>
+      <xsd:element name="Fr" type="FrType" />
+      <xsd:element name="To" type="ToType" />
+      <xsd:element name="BizMsgIdr" type="xsd:string" />
+      <xsd:element name="MsgDefIdr" type="xsd:string" />
+      <xsd:element name="BizSvc" type="xsd:string" />
+      <xsd:element name="CreDt" type="xsd:dateTime" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ToType">
+    <xsd:sequence>
+      <xsd:element name="FIId" type="FIIdType" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="FrType">
+    <xsd:sequence>
+      <xsd:element name="FIId" type="FIIdType" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="FIIdType">
+    <xsd:sequence>
+      <xsd:element name="FinInstnId" type="FinInstnIdType" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>
+  
+#XML FILE:
+
+<?xml version="1.0" encoding="UTF-8"?>
+<DataPDU xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="your-schema-file.xsd">
+  <Body>
+    <AppHdr>
+      <Fr>
+        <FIId>
+          <FinInstnId>
+            <BICFI>BANKBIC1</BICFI>
+          </FinInstnId>
+        </FIId>
+      </Fr>
+      <To>
+        <FIId>
+          <FinInstnId>
+            <BICFI>BANKBIC2</BICFI>
+          </FinInstnId>
+        </FIId>
+      </To>
+      <BizMsgIdr>MSGID123456</BizMsgIdr>
+      <MsgDefIdr>pacs.008.001.02</MsgDefIdr>
+      <BizSvc>Payment</BizSvc>
+      <CreDt>2024-07-02T10:30:00</CreDt>
+    </AppHdr>
+    <Document>
+      <FIToFICstmrCdtTrf>
+        <GrpHdr>
+          <MsgId>ABC123456</MsgId>
+          <CreDtTm>2024-07-02T10:30:00</CreDtTm>
+          <BtchBookg>true</BtchBookg>
+          <NbOfTxs>1</NbOfTxs>
+          <TtlIntrBkSttlmAmt Ccy="USD"/>
+          <IntrBkSttlmDt>2024-07-03T00:00:00</IntrBkSttlmDt>
+          <SttlmInf>
+            <SttlmMtd>CLRG</SttlmMtd>
+          </SttlmInf>
+          <PmtTpInf>
+            <ClrChanl>RTGS</ClrChanl>
+            <SvcLvl>
+              <Prtry>1</Prtry>
+            </SvcLvl>
+            <LclInstrm>
+              <Prtry>Standard</Prtry>
+            </LclInstrm>
+            <CtgyPurp>
+              <Prtry>101</Prtry>
+            </CtgyPurp>
+          </PmtTpInf>
+          <InstgAgt>
+            <FinInstnId>
+              <BICFI>INSTGAGT1</BICFI>
+            </FinInstnId>
+          </InstgAgt>
+          <InstdAgt>
+            <FinInstnId>
+              <BICFI>INSTDAGT1</BICFI>
+            </FinInstnId>
+          </InstdAgt>
+        </GrpHdr>
+        <CdtTrfTxInf>
+          <PmtId>
+            <InstrId>INSTR123</InstrId>
+            <EndToEndId>E2EID456</EndToEndId>
+            <TxId>TX789</TxId>
+          </PmtId>
+          <PmtTpInf>
+            <ClrChanl>RTGS</ClrChanl>
+            <SvcLvl>
+              <Prtry>1</Prtry>
+            </SvcLvl>
+            <LclInstrm>
+              <Prtry>FAST</Prtry>
+            </LclInstrm>
+            <CtgyPurp>
+              <Prtry>100</Prtry>
+            </CtgyPurp>
+          </PmtTpInf>
+          <IntrBkSttlmAmt Ccy="USD"/>
+          <IntrBkSttlmDt>2024-07-03T00:00:00</IntrBkSttlmDt>
+          <ChrgBr>DEBT</ChrgBr>
+          <InstdAgt>
+            <FinInstnId>
+              <BICFI>INSTDAGT2</BICFI>
+            </FinInstnId>
+          </InstdAgt>
+          <Dbtr>
+            <Nm>John Doe</Nm>
+          </Dbtr>
+          <DbtrAcct>
+            <Id>
+              <Othr>
+                <Id>DE1234567890</Id>
+              </Othr>
+            </Id>
+          </DbtrAcct>
+          <DbtrAgt>
+            <FinInstnId>
+              <BICFI>DEUTDEFF</BICFI>
+            </FinInstnId>
+          </DbtrAgt>
+          <CdtrAgt>
+            <FinInstnId>
+              <BICFI>BNPAFRPP</BICFI>
+            </FinInstnId>
+          </CdtrAgt>
+          <Cdtr>
+            <Nm>Jane Smith</Nm>
+            <PstlAdr>
+              <AdrLine>123 Main Street</AdrLine>
+              <StrtNm>Main Street</StrtNm>
+              <TwnNm>Paris</TwnNm>
+              <Ctry>FR</Ctry>
+            </PstlAdr>
+          </Cdtr>
+          <CdtrAcct>
+            <Id>
+              <Othr>
+                <Id>FR0987654321</Id>
+              </Othr>
+            </Id>
+          </CdtrAcct>
+          <RmtInf>
+            <Ustrd>Invoice Payment</Ustrd>
+          </RmtInf>
+        </CdtTrfTxInf>
+      </FIToFICstmrCdtTrf>
+    </Document>
+  </Body>
+</DataPDU>
